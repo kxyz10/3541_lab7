@@ -17,22 +17,26 @@ public class PlayerShipController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Vector3 direction = getDirection();
-        float moveHorizontal = Input.GetAxisRaw("Horizontal");
-        float moveVertical = Input.GetAxisRaw("Vertical");
-
-        if(moveHorizontal != 0 || moveVertical != 0)
+        if (Input.GetKey(KeyCode.D))
         {
-            Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
-            var q = Quaternion.LookRotation(movement - transform.position);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, q, rotationSpeed * Time.deltaTime);
+            //transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(transform.right), rotationSpeed * Time.deltaTime);
+            //transform.LookAt(transform.right * Time.deltaTime);
+            float damping = 2.0f;
+            //float rotate = Mathf.Lerp(transform.right, transform.position.y, damping * Time.deltaTime);
+            //transform.Rotate(Vector3.up * rotate);
         }
-
-
-        //transform.rotation = Quaternion.LookRotation(movement * Time.deltaTime);
-
-
-        //transform.Translate(movement * movementSpeed * Time.deltaTime, Space.World);
+        if (Input.GetKey(KeyCode.A))
+        {
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(-transform.right), rotationSpeed * Time.deltaTime);
+        }
+        if (Input.GetKey(KeyCode.W))
+        {
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(transform.forward,transform.up), rotationSpeed * Time.deltaTime);
+        }
+        if (Input.GetKey(KeyCode.S))
+        {
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(transform.forward, -transform.up), rotationSpeed * Time.deltaTime);
+        }
         if (Input.GetKey(KeyCode.Space))
         {
             transform.Translate(Vector3.forward * Time.deltaTime, Space.Self);
