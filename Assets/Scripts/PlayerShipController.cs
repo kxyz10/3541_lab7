@@ -6,7 +6,7 @@ public class PlayerShipController : MonoBehaviour
 {
 
 
-    public float movementSpeed = 20.0f;
+    public float movementSpeed = 20f;
     public float rotationSpeed = 10.0f;
     // Use this for initialization
     void Start()
@@ -19,9 +19,9 @@ public class PlayerShipController : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.D))
         {
-            //transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(transform.right), rotationSpeed * Time.deltaTime);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(transform.right), rotationSpeed * Time.deltaTime);
             //transform.LookAt(transform.right * Time.deltaTime);
-            float damping = 2.0f;
+            //float damping = 2.0f;
             //float rotate = Mathf.Lerp(transform.right, transform.position.y, damping * Time.deltaTime);
             //transform.Rotate(Vector3.up * rotate);
         }
@@ -37,9 +37,43 @@ public class PlayerShipController : MonoBehaviour
         {
             transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(transform.forward, -transform.up), rotationSpeed * Time.deltaTime);
         }
-        if (Input.GetKey(KeyCode.Space))
+        //if (Input.GetKey(KeyCode.Space))
+        //{
+        //    transform.Translate(Vector3.forward * Time.deltaTime, Space.Self);
+        //}
+
+        if (Input.GetAxis("Mouse Y") < 0)
         {
-            transform.Translate(Vector3.forward * Time.deltaTime, Space.Self);
+            if (transform.position.z > -15f)
+            {
+                // moving back
+                transform.Translate(Vector3.back * movementSpeed * Time.deltaTime, Space.Self);
+            }
+        }
+        if (Input.GetAxis("Mouse Y") > 0)
+        {
+            if (transform.position.z < 30f)
+            {
+                // moving forward
+                transform.Translate(Vector3.forward * movementSpeed * Time.deltaTime, Space.Self);
+            }
+        }
+        
+        if (Input.GetAxis("Mouse X") < 0)
+        {
+            if (transform.position.x > -30f)
+            {
+                // move left
+                transform.Translate(Vector3.left * movementSpeed * Time.deltaTime, Space.Self);
+            }
+        }
+        if (Input.GetAxis("Mouse X") > 0)
+        {
+            if (transform.position.x < 30f)
+            {
+                // move right
+                transform.Translate(Vector3.right * movementSpeed * Time.deltaTime, Space.Self);
+            }
         }
     }
 
