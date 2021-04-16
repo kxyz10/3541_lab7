@@ -38,6 +38,31 @@ public class PlayerShipController : MonoBehaviour
         {
             forward = 1;
         }
+        //while(transform.position.x > 10 || transform.position.x < -10)
+        //{
+        //    horizontal = -horizontal;
+        //    //transform.position = new Vector3(9.9f, transform.position.y, transform.position.z);
+        //}
+        //while(transform.position.y > 10 || transform.position.y < -10)
+        //{
+        //    vertical = -vertical;
+        //    //transform.position = new Vector3(transform.position.x, 9.9f, transform.position.z);
+        //}
+        //if (transform.position.x < -10)
+        //{
+        //    transform.position = new Vector3(-9.9f, transform.position.y, transform.position.z);
+        //}
+        //if (transform.position.y < -10)
+        //{
+        //    transform.position = new Vector3(transform.position.x, -9.9f, transform.position.z);
+        //}
+        //if (transform.position.x > 10 || transform.position.y > 10 || transform.position.x < -10 || transform.position.y < -10)
+        //{
+        //    Vector3 currentPos = transform.position;
+        //    transform.position = new Vector3(currentPos.x - 0.3f, currentPos.y - 0.3f, currentPos.z);
+        //    horizontal = 0;
+        //    vertical = 0;
+        //}
         shipController.Move((Vector3.right * horizontal + Vector3.up * vertical + Vector3.forward * forward) * Time.deltaTime * moveSpeed);
     }
 }
