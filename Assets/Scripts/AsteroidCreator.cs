@@ -6,8 +6,8 @@ public class AsteroidCreator : MonoBehaviour
 {
     GameObject ship;
     float time = 0.0f;
-    float interval = 1.0f;
-    float spawnDistance = 20.0f;
+    float interval = 0.1f;
+    float spawnDistance = 50.0f;
     public GameObject Asteroid1;
     public GameObject Asteroid2;
     public GameObject Asteroid3;
@@ -34,7 +34,7 @@ public class AsteroidCreator : MonoBehaviour
     void spawnAsteroid()
     {
         Vector3 shipLocation = ship.transform.position;
-        Vector3 spawnLocation = new Vector3(Random.Range(-10, 10), Random.Range(-10, 10), shipLocation.z + spawnDistance);
+        Vector3 spawnLocation = new Vector3(Random.Range(-20, 20), Random.Range(-20, 20), shipLocation.z + spawnDistance);
         int randomNumber = Random.Range(1, 4);
         if(randomNumber == 1)
         {

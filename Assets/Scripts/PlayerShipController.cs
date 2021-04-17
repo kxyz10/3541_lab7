@@ -6,16 +6,20 @@ public class PlayerShipController : MonoBehaviour
 {
 
     public float cameraSensitivity = 1.0f;
-    public float moveSpeed = 10.0f;
+    public float frameSize = 20.0f;
+    public float moveSpeed = 50.0f;
     private float xRotation = 0.0f;
     private float yRotation = 0.0f;
     private Camera camera;
     CharacterController shipController;
 
+
     void Start()
     {
         camera = Camera.main;
         shipController = GetComponent<CharacterController>();
+        shipController.detectCollisions = false;
+
 
     }
 
@@ -38,31 +42,35 @@ public class PlayerShipController : MonoBehaviour
         {
             forward = 1;
         }
-        //while(transform.position.x > 10 || transform.position.x < -10)
-        //{
-        //    horizontal = -horizontal;
-        //    //transform.position = new Vector3(9.9f, transform.position.y, transform.position.z);
-        //}
-        //while(transform.position.y > 10 || transform.position.y < -10)
-        //{
-        //    vertical = -vertical;
-        //    //transform.position = new Vector3(transform.position.x, 9.9f, transform.position.z);
-        //}
-        //if (transform.position.x < -10)
-        //{
-        //    transform.position = new Vector3(-9.9f, transform.position.y, transform.position.z);
-        //}
-        //if (transform.position.y < -10)
-        //{
-        //    transform.position = new Vector3(transform.position.x, -9.9f, transform.position.z);
-        //}
-        //if (transform.position.x > 10 || transform.position.y > 10 || transform.position.x < -10 || transform.position.y < -10)
-        //{
-        //    Vector3 currentPos = transform.position;
-        //    transform.position = new Vector3(currentPos.x - 0.3f, currentPos.y - 0.3f, currentPos.z);
-        //    horizontal = 0;
-        //    vertical = 0;
-        //}
+        if (transform.position.x > frameSize)
+        {
+            shipController.Move(new Vector3(-1.0f, 0, 0));
+            //transform.position = new Vector3(9.9f, transform.position.y, transform.position.z);
+            Debug.Log(":Out of bounds");
+        }
+        if (transform.position.x < -frameSize)
+        {
+            shipController.Move(new Vector3(1.0f, 0, 0));
+            //transform.position = new Vector3(-9.9f, transform.position.y, transform.position.z);
+            Debug.Log("Out of bounds");
+        }
+        if (transform.position.y > frameSize)
+        {
+            shipController.Move(new Vector3(0, -1.0f, 0));
+            //transform.position = new Vector3(transform.position.x, 9.9f, transform.position.z);
+            Debug.Log("Out of bounds");
+        }
+        if (transform.position.y < -frameSize)
+        {
+            shipController.Move(new Vector3(0, 1.0f, 0));
+            //transform.position = new Vector3(transform.position.x, -9.9f, transform.position.z);
+            Debug.Log("Out of bounds");
+        }
         shipController.Move((Vector3.right * horizontal + Vector3.up * vertical + Vector3.forward * forward) * Time.deltaTime * moveSpeed);
     }
+
+    //void OnControllerColliderHit(ControllerColliderHit hit)
+    //{
+    //    Debug.Log("Collision Detected");
+    //}
 }
