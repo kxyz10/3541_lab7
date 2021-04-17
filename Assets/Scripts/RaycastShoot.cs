@@ -30,7 +30,7 @@ public class RaycastShoot : MonoBehaviour
     void Update()
     {
         // Check if the player has pressed the fire button and if enough time has elapsed since they last fired
-        if (Input.GetKey(KeyCode.E) && Time.time > nextFire)
+        if (Input.GetKey(KeyCode.Space) && Time.time > nextFire)
         {
             // Update the time when our player can fire next
             nextFire = Time.time + fireRate;
