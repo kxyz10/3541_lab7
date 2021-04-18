@@ -9,7 +9,7 @@ public class RaycastShoot : MonoBehaviour
     private LineRenderer lineReader;                                        
     private float fireTime;
     public float fireRate = 0.10f;
-    public float weaponRange = 100f;
+    public float weaponRange = 1000f;
 
     void Start()
     {
@@ -28,11 +28,20 @@ public class RaycastShoot : MonoBehaviour
             lineReader.SetPosition(0, shipNose.position);
             lineReader.SetPosition(1, shotOrigin + (camera.transform.forward * weaponRange));
             RaycastHit hit;
-            Physics.Raycast(shotOrigin, shipNose.transform.forward, out hit, weaponRange);
+            if(Physics.Raycast(shotOrigin, shipNose.transform.forward, out hit, weaponRange))
+            {
+                Destroy(hit.transform.gameObject);
+                IncreaseScore();
 
+            }
         }
     }
 
+    void IncreaseScore()
+    {
+        Debug.Log("Object Hit, Increasing Score");
+        return;
+    }
     private IEnumerator ShotEffect()
     {
         lineReader.enabled = true;
