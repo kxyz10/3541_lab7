@@ -10,6 +10,7 @@ public class RaycastShoot : MonoBehaviour
     private float fireTime;
     public float fireRate = 0.10f;
     public float weaponRange = 1000f;
+    public StatTracker statTracker;
 
     void Start()
     {
@@ -20,7 +21,7 @@ public class RaycastShoot : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKey(KeyCode.LeftShift) && Time.time > fireTime)
+        if ((Input.GetKey(KeyCode.LeftShift) || Input.GetMouseButton(0)) && Time.time > fireTime)
         {
             fireTime = Time.time + fireRate;
             StartCoroutine(ShotEffect());
@@ -30,7 +31,7 @@ public class RaycastShoot : MonoBehaviour
             RaycastHit hit;
             if(Physics.Raycast(shotOrigin, shipNose.transform.forward, out hit, weaponRange))
             {
-                Destroy(hit.transform.gameObject);
+                //Destroy(hit.transform.gameObject);
                 IncreaseScore();
 
             }
@@ -40,6 +41,7 @@ public class RaycastShoot : MonoBehaviour
     void IncreaseScore()
     {
         Debug.Log("Object Hit, Increasing Score");
+        statTracker.addScore();
         return;
     }
     private IEnumerator ShotEffect()
