@@ -26,48 +26,57 @@ public class PlayerShipController : MonoBehaviour
 
     void Update()
     {
-        statTracker.trackTime();
-        // mouse movement
-        float cameraX = Input.GetAxis("Mouse X") * cameraSensitivity;
-        float cameraY = Input.GetAxis("Mouse Y") * cameraSensitivity;
-        yRotation += cameraX;
-        xRotation -= cameraY;
-        xRotation = Mathf.Clamp(xRotation, -90, 90);
-        camera.transform.eulerAngles = new Vector3(xRotation, yRotation, 0.0f);
+        bool gameEnd;
+        gameEnd = statTracker.trackTime();
 
-        // spaceship movement
-        float horizontal = Input.GetAxis("Horizontal");
-        float vertical = Input.GetAxis("Vertical");
-        float forward = 0.0f;
-        if (Input.GetKey(KeyCode.Space))
+        if (!gameEnd)
         {
-            forward = 1;
+            // mouse movement
+            float cameraX = Input.GetAxis("Mouse X") * cameraSensitivity;
+            float cameraY = Input.GetAxis("Mouse Y") * cameraSensitivity;
+            yRotation += cameraX;
+            xRotation -= cameraY;
+            xRotation = Mathf.Clamp(xRotation, -90, 90);
+            camera.transform.eulerAngles = new Vector3(xRotation, yRotation, 0.0f);
+
+            // spaceship movement
+            float horizontal = Input.GetAxis("Horizontal");
+            float vertical = Input.GetAxis("Vertical");
+            float forward = 0.0f;
+            if (Input.GetKey(KeyCode.Space))
+            {
+                forward = 1;
+            }
+            if (transform.position.x > frameSize)
+            {
+                shipController.Move(new Vector3(-1.0f, 0, 0));
+                //transform.position = new Vector3(9.9f, transform.position.y, transform.position.z);
+                Debug.Log(":Out of bounds");
+            }
+            if (transform.position.x < -frameSize)
+            {
+                shipController.Move(new Vector3(1.0f, 0, 0));
+                //transform.position = new Vector3(-9.9f, transform.position.y, transform.position.z);
+                Debug.Log("Out of bounds");
+            }
+            if (transform.position.y > frameSize)
+            {
+                shipController.Move(new Vector3(0, -1.0f, 0));
+                //transform.position = new Vector3(transform.position.x, 9.9f, transform.position.z);
+                Debug.Log("Out of bounds");
+            }
+            if (transform.position.y < -frameSize)
+            {
+                shipController.Move(new Vector3(0, 1.0f, 0));
+                //transform.position = new Vector3(transform.position.x, -9.9f, transform.position.z);
+                Debug.Log("Out of bounds");
+            }
+            shipController.Move((Vector3.right * horizontal + Vector3.up * vertical + Vector3.forward * forward) * Time.deltaTime * moveSpeed);
         }
-        if (transform.position.x > frameSize)
+        else
         {
-            shipController.Move(new Vector3(-1.0f, 0, 0));
-            //transform.position = new Vector3(9.9f, transform.position.y, transform.position.z);
-            Debug.Log(":Out of bounds");
+            Time.timeScale = 0;
         }
-        if (transform.position.x < -frameSize)
-        {
-            shipController.Move(new Vector3(1.0f, 0, 0));
-            //transform.position = new Vector3(-9.9f, transform.position.y, transform.position.z);
-            Debug.Log("Out of bounds");
-        }
-        if (transform.position.y > frameSize)
-        {
-            shipController.Move(new Vector3(0, -1.0f, 0));
-            //transform.position = new Vector3(transform.position.x, 9.9f, transform.position.z);
-            Debug.Log("Out of bounds");
-        }
-        if (transform.position.y < -frameSize)
-        {
-            shipController.Move(new Vector3(0, 1.0f, 0));
-            //transform.position = new Vector3(transform.position.x, -9.9f, transform.position.z);
-            Debug.Log("Out of bounds");
-        }
-        shipController.Move((Vector3.right * horizontal + Vector3.up * vertical + Vector3.forward * forward) * Time.deltaTime * moveSpeed);
     }
 
     //void OnControllerColliderHit(ControllerColliderHit hit)

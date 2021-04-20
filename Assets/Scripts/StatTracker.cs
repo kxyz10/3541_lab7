@@ -4,15 +4,9 @@ using UnityEngine.UI;
 public class StatTracker : MonoBehaviour
 {
     public int score;
-    public float time = 101;
+    public float time;
     public Text scoreText;
     public Text timeText;
-
-    // Update is called once per frame
-    //void Update()
-    //{
-    //    scoreText.text
-    //}
 
     public void addScore()
     {
@@ -26,10 +20,12 @@ public class StatTracker : MonoBehaviour
         scoreText.text = score.ToString();
     }
 
-    public void trackTime()
+    public bool trackTime()
     {
         time -= Time.deltaTime;
-        if (time < 100f) timeText.color = Color.red;
+        if (time < 100f) { timeText.color = Color.red; }
+        if (time <= 0f) { return true; }
         timeText.text = time.ToString("0");
+        return false;
     }
 }
