@@ -16,6 +16,7 @@ public class RaycastShoot : MonoBehaviour
     {
         lineReader = GetComponent<LineRenderer>();
         camera = Camera.main;
+        statTracker = new StatTracker();
     }
 
 

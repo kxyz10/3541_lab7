@@ -12,6 +12,7 @@ public class PlayerShipController : MonoBehaviour
     private float yRotation = 0.0f;
     private Camera camera;
     CharacterController shipController;
+    public StatTracker statTracker;
 
 
     void Start()
@@ -25,7 +26,7 @@ public class PlayerShipController : MonoBehaviour
 
     void Update()
     {
-
+        statTracker.trackTime();
         // mouse movement
         float cameraX = Input.GetAxis("Mouse X") * cameraSensitivity;
         float cameraY = Input.GetAxis("Mouse Y") * cameraSensitivity;
